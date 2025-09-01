@@ -1,0 +1,1 @@
+display_set_gui_size(guiW_default, guiH_default);

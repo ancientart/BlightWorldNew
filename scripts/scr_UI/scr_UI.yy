@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_UI",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_UI",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/UI/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"D_NPC",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"D_NPC",
+  "parent":{
+    "name":"Dialog",
+    "path":"folders/Dialog.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
