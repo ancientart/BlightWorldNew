@@ -9,3 +9,5 @@ logoalphaAGE = EMPTY;
 camera = obj_Game_Master.camera;
 _valign = camera.display_base_height;
 _halign = camera.display_base_width;
+
+ room_goto(rm_MainMenu)
