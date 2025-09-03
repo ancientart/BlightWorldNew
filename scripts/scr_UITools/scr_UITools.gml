@@ -5,7 +5,7 @@ enum UI_LAYOUT{
 	IS_GRID
 }
 enum UI_TYPE{
-	OUTER,
+	OUTTER,
     SHELL,
     FRAME,
     TEXT,
@@ -17,7 +17,7 @@ global.ds_grid_list = [];
 
 function ui_element_create(_x,_y,_parent,_layout,_padding) constructor{
 	ui_type = UI_TYPE.SHELL;
-	mainshell = false;
+	outerShell = false;
 	scale = 1;
 	padding = _padding;
 	hide = false;
@@ -122,8 +122,6 @@ function ui_element_sprite_add(_parent, _shell, _layout, _sprite, _index,_paddin
 					pos.y2 = pos.y1 + sprite_size.h;
 			}
 		}
-		//_parent.frame_size.w = frame_size.w;
-		//_parent.frame_size.h = frame_size.h;
 }
 function ui_element_frame_add(_parent, _shell, _layout, _sprite,_tilesize,_padding) 
 		: ui_element_create(0,0,_parent,_layout,_padding) constructor{
@@ -152,30 +150,7 @@ function ui_element_text_add(_parent, _shell, _layout, _string, _font, _size, _c
 			font : []
 		}
 }
-/*
-function ui_element_outerShell_insert(_outerShell, _shelladd){
-	_outerShell.ui_type = UI_TYPE.OUTER;
-	array_push(_outerShell.subShells,_shelladd);
-		children_length = array_length(_outerShell.subShells)-1;
-		_outerShell.next_pos.x1 = 0;
-		_outerShell.next_pos.y1 = 0
-		for (var i = children_length; i >= 0; i--) {
-			var _child = _outerShell.subShells[i];
-			
-			if(_child.frame_size.w > _outerShell.frame_size.w){
-				_outerShell.frame_size.w = _child.frame_size.w;
-			}
-			if(_child.frame_size.h > _outerShell.frame_size.h){
-				_outerShell.frame_size.h = _child.frame_size.h;
-			}
-			_child.pos.x1 = _outerShell.next_pos.x1 + _child.padding;
-			_child.pos.y1 = _outerShell.next_pos.y1 + _child.padding;
-			
-			_outerShell.next_pos.x1 += _child.frame_size.w + _child.padding;
-			_outerShell.next_pos.y1 += _child.frame_size.h + _child.padding;
-		}
-}
-*/	
+
 function ui_draw_elements(_shell){
 	children_length = array_length(_shell.children)-1;
 	for (var i = children_length; i >= 0; i--) {
@@ -190,11 +165,12 @@ function ui_draw_elements(_shell){
 					draw_sprite_ext(_child.sprite_layer[v],_child.sprite_index_layer[v],_child.pos.x1,_child.pos.y1,1,1,0,c_white,1);
 				}
 			break;
-			case UI_TYPE.FRAME:
+			case UI_TYPE.FRAME: //												X               SLICE SIZE				  Y				SLICE SIZE				     W                 SLICE SIZE					H					SLICE SIZE
+draw_text(640,640,string(_shell.frame_size.w) + "  -  " + string(_shell.frame_size.h));
 				draw_sprite_stretched_ext(_child.frame_sprite,NINESLICE.TL,_shell.pos.x1,							_shell.pos.y1,							_child.slice_size,								_child.slice_size,								c_white,1);
 				draw_sprite_stretched_ext(_child.frame_sprite,NINESLICE.TM,_shell.pos.x1 + _child.slice_size,		_shell.pos.y1,							_shell.frame_size.w - (_child.slice_size*2),	_child.slice_size,								c_white,1);
 				draw_sprite_stretched_ext(_child.frame_sprite,NINESLICE.TR,_shell.pos.x2 - _child.slice_size,		_shell.pos.y1,							_child.slice_size,								_child.slice_size,								c_white,1);
-																													
+																														
 																													
 				draw_sprite_stretched_ext(_child.frame_sprite,NINESLICE.ML,_shell.pos.x1,							_shell.pos.y1 + _child.slice_size,		_child.slice_size,								_shell.frame_size.h - (_child.slice_size*2),	c_white,1);
 				draw_sprite_stretched_ext(_child.frame_sprite,NINESLICE.MM,_shell.pos.x1 + _child.slice_size,		_shell.pos.y1 + _child.slice_size,		_shell.frame_size.w - (_child.slice_size*2),	_shell.frame_size.h - (_child.slice_size*2),	c_white,1);
@@ -219,70 +195,48 @@ function ui_draw_elements(_shell){
 		}
 	}
 }
-/*
-function ui_pos_size_update(_parent, _shell){
-
-	children_length = array_length(_parent.children);
-	for (var i = 0; i < children_length; i++) {
-#region FRAME_SIZE UPDATE
-		var _child = _parent.children[i];
-	    if(_child.frame_size.w > _parent.frame_size.w){
-			_parent.frame_size.w = _child.frame_size.w;
-		}
-		if(_child.frame_size.h > _parent.frame_size.h){
-			_parent.frame_size.h = _child.frame_size.h;
-		}
-#endregion
-#region POS UPDATE
-		if(_child.ui_type = UI_TYPE.SPRITE){
-			_child.pos.x2			= _child.pos.x1 + _child.sprite_size.w;
-			_child.pos.y2			= _child.pos.y1 + _child.sprite_size.h;		
-		}
-		if(_child.ui_type = UI_TYPE.FRAME){
-			_child.pos.x2			= _parent.pos.x2;
-			_child.pos.y2			= _parent.pos.y2;		
-		}
-		if(_child.ui_type = UI_TYPE.SHELL){
-			_child.pos.x2			= _parent.pos.x2;
-			_child.pos.y2			= _parent.pos.y2;		
-		}
-		_parent.pos.x2			= _parent.next_pos.x1 + _parent.padding;
-		_parent.pos.y2			= _parent.next_pos.y1 + _parent.padding;
-		_parent.frame_size.w	= _parent.pos.x2 - _parent.pos.x1;
-		_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
-
-
-#endregion
-	}
-}
-*/	
 function ui_element_move_and_update(_x, _y, _parent){
-
-		newXY = m_move_difference(_x, _y, _parent.pos.x1, _parent.pos.y1);
+	newXY = m_move_difference(_x, _y, _parent.pos.x1, _parent.pos.y1);
+	if(_parent.outerShell == true){
 		_parent.pos.x1 += newXY.x1;
 		_parent.pos.y1 += newXY.y1;
 		_parent.pos.x2 += newXY.x2;
 		_parent.pos.y2 += newXY.y2;
+		_parent.frame_size.w	= _parent.pos.x2 - _parent.pos.x1;
+		_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
+		var _childLength = array_length(_parent.subShells);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _parent.subShells[i];
+			_child.pos.x1 += newXY.x1;
+			_child.pos.y1 += newXY.y1;
+			_child.pos.x2 += newXY.x2;
+			_child.pos.y2 += newXY.y2;
+			ui_element_move_and_update(_x, _y, _child);
+		}		
 		
+	}
 		
+		_parent.pos.x1 += newXY.x1;
+		_parent.pos.y1 += newXY.y1;
+		_parent.pos.x2 += newXY.x2;
+		_parent.pos.y2 += newXY.y2;
 		var _childLength = array_length(_parent.children);
 		for (var i = 0; i < _childLength; i++) {
 			_parent.children[i].pos.x1 += newXY.x1;
 			_parent.children[i].pos.y1 += newXY.y1;
 			_parent.children[i].pos.x2 += newXY.x2;
 			_parent.children[i].pos.y2 += newXY.y2;
-			_parent.children[i].frame_size.w = (_parent.children[i].pos.x2 - _parent.children[i].pos.x1) + (_parent.padding*2 + _parent.children[i].padding*2);
-			_parent.children[i].frame_size.h = (_parent.children[i].pos.y2 - _parent.children[i].pos.y2) + (_parent.padding*2 + _parent.children[i].padding*2);
-			_parent.frame_size.w = _parent.children[i].frame_size.w;
-			_parent.frame_size.h = _parent.children[i].frame_size.h;
 		}
-		//_parent.pos.x2			= _parent.next_pos.x1 + _parent.padding;
-		//_parent.pos.y2			= _parent.next_pos.y1 + _parent.padding;
-		//_parent.frame_size.w	= _parent.pos.x2 - _parent.pos.x1;
-		//_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
+		_parent.frame_size.w	= _parent.pos.x2 - _parent.pos.x1;
+		_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
 }
+function ui_container_insert(_container,_shell){
+
+}
+	
 function ui_draw_text_box(_element){
 f_draw_default();
+
 	children_length = array_length(_element.children);
 	for (var i = 0; i < children_length; i++) {
 		var _child = _element.children[i];

@@ -1,20 +1,37 @@
 camera = obj_Game_Master.camera;
 _valign = camera.display_base_height;
 _halign = camera.display_base_width;
+#region menu
+	menu = new ui_element_shell_add(1400, 400,undefined , UI_LAYOUT.IS_LIST, 32); 
 
-menu = new ui_element_shell_add(1400, 400,undefined , UI_LAYOUT.IS_LIST, 32); 
+	newgame = new ui_element_sprite_add(menu, menu, UI_LAYOUT.IS_LIST, spr_newgame, 0,16);
+	array_push(menu.children,newgame);
+	newgame2 = new ui_element_sprite_add(menu, menu, UI_LAYOUT.IS_LIST, spr_newgame, 1,16);
+	array_push(menu.children,newgame2);
+	newgame3 = new ui_element_sprite_add(menu, menu, UI_LAYOUT.IS_LIST, spr_newgame, 2,16);
+	array_push(menu.children,newgame3);
+	newgame4 = new ui_element_sprite_add(menu, menu, UI_LAYOUT.IS_LIST, spr_newgame, 3,16);
+	array_push(menu.children,newgame4);
+	menu_frame = new ui_element_frame_add(menu, menu, UI_LAYOUT.IS_LIST, spr_nineSlice_01,32,0)
+	array_push(menu.children,menu_frame);
+#endregion
 
-newgame = new ui_element_sprite_add(menu, menu, UI_LAYOUT.IS_LIST, spr_newgame, 0,16);
-array_push(menu.children,newgame);
-newgame2 = new ui_element_sprite_add(menu, menu, UI_LAYOUT.IS_LIST, spr_newgame, 1,16);
-array_push(menu.children,newgame2);
-newgame3 = new ui_element_sprite_add(menu, menu, UI_LAYOUT.IS_LIST, spr_newgame, 2,16);
-array_push(menu.children,newgame3);
-newgame4 = new ui_element_sprite_add(menu, menu, UI_LAYOUT.IS_LIST, spr_newgame, 3,16);
-array_push(menu.children,newgame4);
-menu_frame = new ui_element_frame_add(menu, menu, UI_LAYOUT.IS_LIST, spr_nineSlice_01,32,0)
-array_push(menu.children,menu_frame);
+#region menu1
+menu1 = new ui_element_shell_add(1400, 464,undefined , UI_LAYOUT.IS_LIST, 32); 
 
+anewgame = new ui_element_sprite_add(menu1, menu1, UI_LAYOUT.IS_LIST, spr_newgame, 0,16);
+array_push(menu1.children,anewgame);
+anewgame2 = new ui_element_sprite_add(menu1, menu1, UI_LAYOUT.IS_LIST, spr_newgame, 1,16);
+array_push(menu1.children,anewgame2);
+anewgame3 = new ui_element_sprite_add(menu1, menu1, UI_LAYOUT.IS_LIST, spr_newgame, 2,16);
+array_push(menu1.children,anewgame3);
+anewgame4 = new ui_element_sprite_add(menu1, menu1, UI_LAYOUT.IS_LIST, spr_newgame, 3,16);
+array_push(menu1.children,anewgame4);
+amenu_frame = new ui_element_frame_add(menu1, menu1, UI_LAYOUT.IS_LIST, spr_nineSlice_01,32,0)
+array_push(menu1.children,amenu_frame);
+#endregion
+
+#region menu2
 menu2 = new ui_element_shell_add(1000, 64,undefined , UI_LAYOUT.IS_STRIP, 32); 
 
 newgam = new ui_element_sprite_add(menu2, menu2, UI_LAYOUT.IS_LIST, spr_newgame, 0,16);
@@ -27,6 +44,7 @@ newgam4 = new ui_element_sprite_add(menu2, menu2, UI_LAYOUT.IS_LIST, spr_newgame
 array_push(menu2.children,newgam4);
 menu_fram = new ui_element_frame_add(menu2, menu2, UI_LAYOUT.IS_LIST, spr_nineSlice_01,32,0)
 array_push(menu2.children,menu_fram);
+#endregion
 
 
 
@@ -57,7 +75,7 @@ menu_fram10 = new ui_element_frame_add(menu4, menu3, UI_LAYOUT.IS_LIST, spr_nine
 array_push(menu4.children,menu_fram10);
 
 // second inner container
-menu5 = new ui_element_shell_add(0, 0,menu3 , UI_LAYOUT.IS_LIST, 32); 
+menu5 = new ui_element_shell_add(menu4.pos.x2 - (menu4.padding*2), 0,menu3 , UI_LAYOUT.IS_LIST, 32); 
 array_push(menu3.children,menu5);
 
 newgam20 = new ui_element_sprite_add(menu5, menu3, UI_LAYOUT.IS_LIST, spr_newgame, 0,16);
@@ -71,6 +89,10 @@ array_push(menu5.children,newgam24);
 menu_fram20 = new ui_element_frame_add(menu5, menu3, UI_LAYOUT.IS_LIST, spr_nineSlice_01,32,0)
 array_push(menu5.children,menu_fram20);
 
+menu3.pos.x2 = menu5.pos.x2;
+menu3.pos.y2 = menu5.pos.y2;
+menu3.frame_size.w	= menu5.pos.x2 - menu5.pos.x1;
+menu3.frame_size.h	= menu5.pos.y2 - menu5.pos.y1;
 
 //ui_element_move_and_update(64, 64, menu);
 //ui_element_outerShell_insert(menu3, menu5);
