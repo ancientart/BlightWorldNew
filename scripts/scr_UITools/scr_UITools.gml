@@ -14,7 +14,6 @@ enum UI_TYPE{
 }
 global.ds_grid_list = [];
 
-
 function ui_element_create(_x,_y,_parent,_layout,_padding) constructor{
 	ui_type = UI_TYPE.SHELL;
 	outerShell = false;
@@ -198,19 +197,19 @@ draw_text(640,640,string(_shell.frame_size.w) + "  -  " + string(_shell.frame_si
 }
 function ui_element_move_and_update(_x, _y, _parent){
 	newXY = m_move_difference(_x, _y, _parent.pos.x1, _parent.pos.y1);
-		_parent.pos.x1 += newXY.x1;
-		_parent.pos.y1 += newXY.y1;
-		_parent.pos.x2 += newXY.x2;
-		_parent.pos.y2 += newXY.y2;
-		var _childLength = array_length(_parent.children);
-		for (var i = 0; i < _childLength; i++) {
-			_parent.children[i].pos.x1 += newXY.x1;
-			_parent.children[i].pos.y1 += newXY.y1;
-			_parent.children[i].pos.x2 += newXY.x2;
-			_parent.children[i].pos.y2 += newXY.y2;
-		}
-		_parent.frame_size.w	= _parent.pos.x2 - _parent.pos.x1;
-		_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
+	_parent.pos.x1 += newXY.x1;
+	_parent.pos.y1 += newXY.y1;
+	_parent.pos.x2 += newXY.x2;
+	_parent.pos.y2 += newXY.y2;
+	var _childLength = array_length(_parent.children);
+	for (var i = 0; i < _childLength; i++) {
+		_parent.children[i].pos.x1 += newXY.x1;
+		_parent.children[i].pos.y1 += newXY.y1;
+		_parent.children[i].pos.x2 += newXY.x2;
+		_parent.children[i].pos.y2 += newXY.y2;
+	}
+	_parent.frame_size.w	= _parent.pos.x2 - _parent.pos.x1;
+	_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
 
 }
 function ui_element_mouseLeft_pressed(_parent){
@@ -218,11 +217,62 @@ function ui_element_mouseLeft_pressed(_parent){
 		for (var i = 0; i < _childLength; i++) {
 			var _child = _parent.children[i];
 			if(_child.isMouseOver == true && mouse_check_button_pressed(mb_left)){
-				show_debug_message(mouse_x, mouse_y, _child.element_name );
-				
+				return _child;
 			}
+			return false;
 		}
 }
+function ui_element_mouseLeft_released(_parent){
+		var _childLength = array_length(_parent.children);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _parent.children[i];
+			if(_child.isMouseOver == true && mouse_check_button_released()(mb_left)){
+				return _child;
+			}
+			return false;
+		}
+}	
+function ui_element_mouseLeft_released(_parent){
+		var _childLength = array_length(_parent.children);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _parent.children[i];
+			if(_child.isMouseOver == true && mouse_check_button(mb_left)){
+				return _child;
+			}
+			return false;
+		}
+}		
+
+function ui_element_mouseRight_pressed(_parent){
+		var _childLength = array_length(_parent.children);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _parent.children[i];
+			if(_child.isMouseOver == true && mouse_check_button_pressed(mb_right)){
+				return _child;
+			}
+			return false;
+		}
+}
+function ui_element_mouseRight_released(_parent){
+		var _childLength = array_length(_parent.children);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _parent.children[i];
+			if(_child.isMouseOver == true && mouse_check_button_released()(mb_right)){
+				return _child;
+			}
+			return false;
+		}
+}	
+function ui_element_mouseRight_released(_parent){
+		var _childLength = array_length(_parent.children);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _parent.children[i];
+			if(_child.isMouseOver == true && mouse_check_button(mb_right)){
+				return _child;
+			}
+			return false;
+		}
+}			
 	
 function ui_draw_text_box(_element){
 f_draw_default();

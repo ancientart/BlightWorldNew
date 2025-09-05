@@ -57,4 +57,5 @@ newgame3.sprite_scale -= .5;
 newgame4.sprite_scale -= .5;
 show_debug_message(mouse_x,mouse_y, "click!");	
 }
-draw_text(device_mouse_x_to_gui(0)+64 , device_mouse_y_to_gui(0),newgame.sprite_scale);
+//draw_text(device_mouse_x_to_gui(0)+64 , device_mouse_y_to_gui(0),newgame3.element_name);
+
