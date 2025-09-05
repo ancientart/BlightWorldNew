@@ -38,20 +38,11 @@ function m_move_difference(_newX, _newY, _oldX, _oldY){
 		x2 : 0,
 		y2 : 0
 	}
-	if(_newX > _oldX){
 		pos.x1 = (_newX - _oldX);
 		pos.x2 = (_newX - _oldX);
-	}else{
-		pos.x1 = (_newX - _oldX);
-		pos.x2 = (_newX - _oldX);
-	}
-	if(_newY > _oldY){
 		pos.y1 = (_newY - _oldY);
 		pos.y2 = (_newY - _oldY);
-	}else{
-		pos.y1 = (_newY - _oldY);
-		pos.y2 = (_newY - _oldY);
-	}
+
 	return pos;
 }
 #region SHAKE

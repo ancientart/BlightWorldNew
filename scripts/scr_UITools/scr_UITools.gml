@@ -63,9 +63,10 @@ function ui_element_grid_add(_parent, _shell,_layout, _width, _height,_gridsize,
 }
 function ui_element_sprite_add(_parent, _shell, _layout, _sprite, _index,_padding) 
 		: ui_element_create(0,0,_parent,_layout,_padding) constructor{
-			
+		element_name = "";	
 		ui_type = UI_TYPE.SPRITE;
 		padding = _padding
+		sprite_scale = 1;
 		sprite_layer[0] = _sprite;
 		sprite_index_layer[0] = _index;
 
@@ -162,7 +163,7 @@ function ui_draw_elements(_shell){
 			case UI_TYPE.SPRITE:
 				layers = array_length(_child.sprite_layer);
 				for (var v = 0; v < layers; v++) {
-					draw_sprite_ext(_child.sprite_layer[v],_child.sprite_index_layer[v],_child.pos.x1,_child.pos.y1,1,1,0,c_white,1);
+					draw_sprite_ext(_child.sprite_layer[v],_child.sprite_index_layer[v],_child.pos.x1,_child.pos.y1,_child.sprite_scale,_child.sprite_scale,0,c_white,1);
 				}
 			break;
 			case UI_TYPE.FRAME: //												X               SLICE SIZE				  Y				SLICE SIZE				     W                 SLICE SIZE					H					SLICE SIZE
@@ -197,25 +198,6 @@ draw_text(640,640,string(_shell.frame_size.w) + "  -  " + string(_shell.frame_si
 }
 function ui_element_move_and_update(_x, _y, _parent){
 	newXY = m_move_difference(_x, _y, _parent.pos.x1, _parent.pos.y1);
-	if(_parent.outerShell == true){
-		_parent.pos.x1 += newXY.x1;
-		_parent.pos.y1 += newXY.y1;
-		_parent.pos.x2 += newXY.x2;
-		_parent.pos.y2 += newXY.y2;
-		_parent.frame_size.w	= _parent.pos.x2 - _parent.pos.x1;
-		_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
-		var _childLength = array_length(_parent.subShells);
-		for (var i = 0; i < _childLength; i++) {
-			var _child = _parent.subShells[i];
-			_child.pos.x1 += newXY.x1;
-			_child.pos.y1 += newXY.y1;
-			_child.pos.x2 += newXY.x2;
-			_child.pos.y2 += newXY.y2;
-			ui_element_move_and_update(_x, _y, _child);
-		}		
-		
-	}
-		
 		_parent.pos.x1 += newXY.x1;
 		_parent.pos.y1 += newXY.y1;
 		_parent.pos.x2 += newXY.x2;
@@ -229,9 +211,17 @@ function ui_element_move_and_update(_x, _y, _parent){
 		}
 		_parent.frame_size.w	= _parent.pos.x2 - _parent.pos.x1;
 		_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
-}
-function ui_container_insert(_container,_shell){
 
+}
+function ui_element_mouseLeft_pressed(_parent){
+		var _childLength = array_length(_parent.children);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _parent.children[i];
+			if(_child.isMouseOver == true && mouse_check_button_pressed(mb_left)){
+				show_debug_message(mouse_x, mouse_y, _child.element_name );
+				
+			}
+		}
 }
 	
 function ui_draw_text_box(_element){
