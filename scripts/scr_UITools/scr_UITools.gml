@@ -212,34 +212,45 @@ function ui_element_move_and_update(_x, _y, _parent){
 	_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
 
 }
+function ui_element_insertshell(){
+	
+ui_element_move_and_update(300, 800, menu3);
+
+ui_element_move_and_update(menu3.pos.x1 + menu3.padding,					menu3.pos.y1 + menu3.padding, menu4);
+ui_element_move_and_update(menu3.pos.x1 + menu4.frame_size.w+menu3.padding, menu3.pos.y1 + menu3.padding, menu5);
+menu3.pos.x2 = menu5.pos.x2 + menu3.padding;
+menu3.pos.y2 = menu5.pos.y2 + menu3.padding;
+menu4.frame_size.w = menu4.pos.x2 - menu4.pos.x1;
+menu4.frame_size.h = menu4.pos.y2 - menu4.pos.y1;
+}
+	
+	
 function ui_element_mouseLeft_pressed(_parent){
 		var _childLength = array_length(_parent.children);
 		for (var i = 0; i < _childLength; i++) {
 			var _child = _parent.children[i];
-			if(_child.isMouseOver == true && mouse_check_button_pressed(mb_left)){
+			if(_child.isMouseOver == true && mouse_check_button_pressed(mb_left) && _child.ui_type == UI_TYPE.SPRITE){
 				return _child;
 			}
-			return false;
+			
 		}
 }
 function ui_element_mouseLeft_released(_parent){
 		var _childLength = array_length(_parent.children);
 		for (var i = 0; i < _childLength; i++) {
 			var _child = _parent.children[i];
-			if(_child.isMouseOver == true && mouse_check_button_released()(mb_left)){
+			if(_child.isMouseOver == true && mouse_check_button_released(mb_left) && _child.ui_type == UI_TYPE.SPRITE){
 				return _child;
 			}
-			return false;
 		}
 }	
-function ui_element_mouseLeft_released(_parent){
+function ui_element_mouseLeft(_parent){
 		var _childLength = array_length(_parent.children);
 		for (var i = 0; i < _childLength; i++) {
 			var _child = _parent.children[i];
-			if(_child.isMouseOver == true && mouse_check_button(mb_left)){
+			if(_child.isMouseOver == true && mouse_check_button(mb_left) && _child.ui_type == UI_TYPE.SPRITE){
 				return _child;
 			}
-			return false;
 		}
 }		
 
@@ -247,30 +258,28 @@ function ui_element_mouseRight_pressed(_parent){
 		var _childLength = array_length(_parent.children);
 		for (var i = 0; i < _childLength; i++) {
 			var _child = _parent.children[i];
-			if(_child.isMouseOver == true && mouse_check_button_pressed(mb_right)){
+			if(_child.isMouseOver == true && mouse_check_button_pressed(mb_right) && _child.ui_type == UI_TYPE.SPRITE){
 				return _child;
 			}
-			return false;
+
 		}
 }
 function ui_element_mouseRight_released(_parent){
 		var _childLength = array_length(_parent.children);
 		for (var i = 0; i < _childLength; i++) {
 			var _child = _parent.children[i];
-			if(_child.isMouseOver == true && mouse_check_button_released()(mb_right)){
+			if(_child.isMouseOver == true && mouse_check_button_released(mb_right) && _child.ui_type == UI_TYPE.SPRITE){
 				return _child;
 			}
-			return false;
 		}
 }	
-function ui_element_mouseRight_released(_parent){
+function ui_element_mouseRight(_parent){
 		var _childLength = array_length(_parent.children);
 		for (var i = 0; i < _childLength; i++) {
 			var _child = _parent.children[i];
-			if(_child.isMouseOver == true && mouse_check_button(mb_right)){
+			if(_child.isMouseOver == true && mouse_check_button(mb_right) && _child.ui_type == UI_TYPE.SPRITE){
 				return _child;
 			}
-			return false;
 		}
 }			
 	

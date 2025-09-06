@@ -64,6 +64,7 @@
     {"id":{"name":"rm_SplashScreen","path":"rooms/rm_SplashScreen/rm_SplashScreen.yy",},},
     {"id":{"name":"rm_World","path":"rooms/rm_World/rm_World.yy",},},
     {"id":{"name":"D_NPC","path":"scripts/D_NPC/D_NPC.yy",},},
+    {"id":{"name":"scr_botany","path":"scripts/scr_botany/scr_botany.yy",},},
     {"id":{"name":"scr_FunctionTools","path":"scripts/scr_FunctionTools/scr_FunctionTools.yy",},},
     {"id":{"name":"scr_KeyBinds","path":"scripts/scr_KeyBinds/scr_KeyBinds.yy",},},
     {"id":{"name":"scr_Macros","path":"scripts/scr_Macros/scr_Macros.yy",},},
