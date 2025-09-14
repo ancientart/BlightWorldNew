@@ -36,6 +36,9 @@
     {"name":"scr_Macros","order":2,"path":"scripts/scr_Macros/scr_Macros.yy",},
     {"name":"scr_UITools","order":3,"path":"scripts/scr_UITools/scr_UITools.yy",},
     {"name":"spr_AGE_Logo","order":1,"path":"sprites/spr_AGE_Logo/spr_AGE_Logo.yy",},
+    {"name":"spr_newgame_down","order":3,"path":"sprites/spr_newgame_down/spr_newgame_down.yy",},
+    {"name":"spr_newgame_mo","order":2,"path":"sprites/spr_newgame_mo/spr_newgame_mo.yy",},
     {"name":"spr_newgame","order":1,"path":"sprites/spr_newgame/spr_newgame.yy",},
+    {"name":"Sprite9","order":9,"path":"sprites/Sprite9/Sprite9.yy",},
   ],
 }

@@ -2,7 +2,7 @@
 		display_base_width = 0;
 		display_base_height = 1200;//1200
 		//blackmask = true;
-		adjustzoom = 1.5;
+		adjustzoom = .75;
 		adjustwindow = 1;
 		bool_fullScreen = false;
 	#endregion

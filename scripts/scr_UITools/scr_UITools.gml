@@ -14,6 +14,8 @@ enum UI_TYPE{
 }
 global.ds_grid_list = [];
 
+
+// =======================================    CREATION CODE    ==========================================
 function ui_element_create(_x,_y,_parent,_layout,_padding) constructor{
 	ui_type = UI_TYPE.SHELL;
 	outerShell = false;
@@ -39,7 +41,7 @@ function ui_element_create(_x,_y,_parent,_layout,_padding) constructor{
 	}
 
 }
-function ui_element_shell_add(_x, _y,_parent, _layout,_padding) 
+function ui_element_shell_create(_x, _y,_parent, _layout,_padding) 
 		: ui_element_create(_x, _y,_parent,_layout,_padding) constructor{
 		ui_type = UI_TYPE.SHELL;
 		children = [];
@@ -70,11 +72,11 @@ function ui_element_sprite_add(_parent, _shell, _layout, _sprite, _index,_paddin
 		sprite_index_layer[0] = _index;
 
 		sprite_size = {
-			w : sprite_get_width(_sprite),
-			h : sprite_get_height(_sprite)
+			w : (sprite_get_width(_sprite)*sprite_scale),
+			h : (sprite_get_height(_sprite)*sprite_scale)
 		}
-		frame_size.w = sprite_get_width(_sprite)+_padding*2;
-		frame_size.h =  sprite_get_height(_sprite)+_padding*2;
+		frame_size.w = sprite_size.w + _padding*2;
+		frame_size.h = sprite_size.h + _padding*2;
 
 
 
@@ -151,6 +153,35 @@ function ui_element_text_add(_parent, _shell, _layout, _string, _font, _size, _c
 		}
 }
 
+function ui_element_insertshell(_outerShell, _insertShell){
+		array_push(_outerShell.subShells,_insertShell);
+
+		var _childLength = array_length(_outerShell.subShells);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _outerShell.subShells[i];
+			var _last = array_last(_outerShell.subShells);
+			var _first = array_first(_outerShell.subShells)
+
+			if(i > 0){
+				ui_element_move_and_update((_outerShell.pos.x1 + _child.frame_size.w + _outerShell.padding), (_insertShell.pos.y1 + _outerShell.padding), _child);
+				_outerShell.pos.x2 = _last.pos.x2 + _outerShell.padding;
+				_outerShell.pos.y2 = _last.pos.y2 + _outerShell.padding;
+				_outerShell.frame_size.w = _outerShell.pos.x2 - _outerShell.pos.x1;
+				_outerShell.frame_size.h = _outerShell.pos.y2 - _outerShell.pos.y1;
+				_child.frame_size.w = _child.pos.x2 - _child.pos.x1;
+				_child.frame_size.h = _child.pos.y2 - _child.pos.y1;
+			}else{
+				ui_element_move_and_update((_outerShell.pos.x1 + _outerShell.padding), (_outerShell.pos.y1 + _outerShell.padding), _child);
+				_outerShell.pos.x2 = _last.pos.x2 + _outerShell.padding;
+				_outerShell.pos.y2 = _last.pos.y2 + _outerShell.padding;
+				_outerShell.frame_size.w = _outerShell.pos.x2 - _outerShell.pos.x1;
+				_outerShell.frame_size.h = _outerShell.pos.y2 - _outerShell.pos.y1;
+				_child.frame_size.w = _child.pos.x2 - _child.pos.x1;
+				_child.frame_size.h = _child.pos.y2 - _child.pos.y1;
+			}
+		}
+}
+// =======================================    DRAW/STEP CODE    ==========================================
 function ui_draw_elements(_shell){
 	children_length = array_length(_shell.children)-1;
 	for (var i = children_length; i >= 0; i--) {
@@ -166,7 +197,6 @@ function ui_draw_elements(_shell){
 				}
 			break;
 			case UI_TYPE.FRAME: //												X               SLICE SIZE				  Y				SLICE SIZE				     W                 SLICE SIZE					H					SLICE SIZE
-draw_text(640,640,string(_shell.frame_size.w) + "  -  " + string(_shell.frame_size.h));
 				draw_sprite_stretched_ext(_child.frame_sprite,NINESLICE.TL,_shell.pos.x1,							_shell.pos.y1,							_child.slice_size,								_child.slice_size,								c_white,1);
 				draw_sprite_stretched_ext(_child.frame_sprite,NINESLICE.TM,_shell.pos.x1 + _child.slice_size,		_shell.pos.y1,							_shell.frame_size.w - (_child.slice_size*2),	_child.slice_size,								c_white,1);
 				draw_sprite_stretched_ext(_child.frame_sprite,NINESLICE.TR,_shell.pos.x2 - _child.slice_size,		_shell.pos.y1,							_child.slice_size,								_child.slice_size,								c_white,1);
@@ -195,6 +225,20 @@ draw_text(640,640,string(_shell.frame_size.w) + "  -  " + string(_shell.frame_si
 		}
 	}
 }
+function ui_element_change_sprite(_parent){
+		var _childLength = array_length(_parent.children);
+		for (var i = 0; i < _childLength; i++) {
+			var _child = _parent.children[i];
+			if(_child.isMouseOver == true && _child.ui_type == UI_TYPE.SPRITE){
+				_child.sprite_layer[0] = spr_newgame_mo;
+			}else{
+				_child.sprite_layer[0] = spr_newgame;
+			}
+			if(_child.isMouseOver == true && mouse_check_button(mb_left) && _child.ui_type == UI_TYPE.SPRITE){
+				_child.sprite_layer[0] = spr_newgame_down;
+			}			
+		}
+}
 function ui_element_move_and_update(_x, _y, _parent){
 	newXY = m_move_difference(_x, _y, _parent.pos.x1, _parent.pos.y1);
 	_parent.pos.x1 += newXY.x1;
@@ -212,18 +256,6 @@ function ui_element_move_and_update(_x, _y, _parent){
 	_parent.frame_size.h	= _parent.pos.y2 - _parent.pos.y1;
 
 }
-function ui_element_insertshell(){
-	
-ui_element_move_and_update(300, 800, menu3);
-
-ui_element_move_and_update(menu3.pos.x1 + menu3.padding,					menu3.pos.y1 + menu3.padding, menu4);
-ui_element_move_and_update(menu3.pos.x1 + menu4.frame_size.w+menu3.padding, menu3.pos.y1 + menu3.padding, menu5);
-menu3.pos.x2 = menu5.pos.x2 + menu3.padding;
-menu3.pos.y2 = menu5.pos.y2 + menu3.padding;
-menu4.frame_size.w = menu4.pos.x2 - menu4.pos.x1;
-menu4.frame_size.h = menu4.pos.y2 - menu4.pos.y1;
-}
-	
 	
 function ui_element_mouseLeft_pressed(_parent){
 		var _childLength = array_length(_parent.children);

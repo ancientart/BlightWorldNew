@@ -35,5 +35,5 @@
     "path":"sprites/spr_Game_Marker/spr_Game_Marker.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }
