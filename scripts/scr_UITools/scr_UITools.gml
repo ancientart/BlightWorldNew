@@ -13,8 +13,6 @@ enum UI_TYPE{
     GRID
 }
 global.ds_grid_list = [];
-
-
 // =======================================    CREATION CODE    ==========================================
 function ui_element_create(_x,_y,_parent,_layout,_padding) constructor{
 	ui_type = UI_TYPE.SHELL;
