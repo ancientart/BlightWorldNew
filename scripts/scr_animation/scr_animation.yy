@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_animation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_animation",
+  "parent":{
+    "name":"GameSystems",
+    "path":"folders/Game/Scripts/GameSystems.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
